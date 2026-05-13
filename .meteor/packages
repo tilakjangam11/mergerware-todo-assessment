@@ -1,0 +1,14 @@
+# Meteor packages used by this project, one per line.
+
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+templating
+reactive-dict
+tracker
+standard-minifier-css
+standard-minifier-js
+es5-shim
+ecmascript
+check
