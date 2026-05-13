@@ -1,0 +1,86 @@
+<body>
+  {{> mainContainer}}
+</body>
+
+<template name="mainContainer">
+  <div class="page-shell">
+    <div class="container">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Meteor + Blaze</p>
+          <h1>Simple Todos</h1>
+          <p class="subtitle">
+            A simple assessment project based on the official tutorial, with category tags and drag-and-drop ordering.
+          </p>
+        </div>
+
+        <div class="summary-card">
+          <span class="summary-number">{{pendingTasksCount}}</span>
+          <span class="summary-label">pending tasks</span>
+        </div>
+      </header>
+
+      <section class="panel">
+        <form class="task-form">
+          <input type="text" name="text" placeholder="Type a new task..." autocomplete="off" />
+
+          <select name="category">
+            <option value="Work">Work</option>
+            <option value="Personal">Personal</option>
+            <option value="Urgent">Urgent</option>
+          </select>
+
+          <button type="submit" class="primary-button">Add Task</button>
+        </form>
+      </section>
+
+      <section class="panel filters-panel">
+        <div class="filter-row">
+          <button type="button" id="toggle-completed-button" class="filter-button {{isHideCompletedActive}}">
+            {{hideCompletedLabel}}
+          </button>
+        </div>
+
+        <div class="filter-row">
+          <span class="filter-label">Category:</span>
+          <button type="button" class="filter-button {{isSelectedCategory 'All'}}" data-category="All">All</button>
+          <button type="button" class="filter-button {{isSelectedCategory 'Work'}}" data-category="Work">Work</button>
+          <button type="button" class="filter-button {{isSelectedCategory 'Personal'}}" data-category="Personal">Personal</button>
+          <button type="button" class="filter-button {{isSelectedCategory 'Urgent'}}" data-category="Urgent">Urgent</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        {{#if hasTasks}}
+          <p class="drag-help">Drag a task card to move it. The order is saved in MongoDB automatically.</p>
+        {{else}}
+          <p class="empty-state">No tasks match the current filter yet.</p>
+        {{/if}}
+
+        <ul class="tasks-list">
+          {{#each tasks}}
+            {{> task}}
+          {{/each}}
+        </ul>
+      </section>
+    </div>
+  </div>
+</template>
+
+<template name="task">
+  <li class="task-item {{#if isChecked}}checked{{/if}}" draggable="true" data-id="{{_id}}">
+    <div class="task-main">
+      <label class="task-check">
+        <input type="checkbox" class="toggle-checked" {{#if isChecked}}checked{{/if}} />
+        <span class="task-text">{{text}}</span>
+      </label>
+
+      <span class="category-badge" data-category="{{category}}">{{category}}</span>
+    </div>
+
+    <div class="task-actions">
+      <span class="drag-handle" title="Drag to reorder">::</span>
+      <button type="button" class="delete-task" title="Delete task">&times;</button>
+    </div>
+  </li>
+</template>
