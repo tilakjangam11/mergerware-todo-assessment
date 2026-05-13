@@ -19,6 +19,7 @@ Meteor.methods({
     check(text, String);
     check(category, String);
 
+    // Trim the input before checking if it is empty.
     const cleanText = text.trim();
 
     if (!cleanText) {
@@ -27,6 +28,7 @@ Meteor.methods({
 
     ensureValidCategory(category);
 
+    // Find the highest order value so new tasks append to the list.
     const lastTask = await TasksCollection.findOneAsync({}, { sort: { order: -1 } });
 
     return TasksCollection.insertAsync({
