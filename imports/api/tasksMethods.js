@@ -19,7 +19,7 @@ Meteor.methods({
     check(text, String);
     check(category, String);
 
-    // Trim the input so blank tasks are rejected.
+    // Trim the input before checking if it is empty.
     const cleanText = text.trim();
 
     if (!cleanText) {
@@ -28,7 +28,7 @@ Meteor.methods({
 
     ensureValidCategory(category);
 
-    // Find the last order value so new tasks go to the bottom.
+    // Find the highest order value so new tasks append to the list.
     const lastTask = await TasksCollection.findOneAsync({}, { sort: { order: -1 } });
 
     return TasksCollection.insertAsync({
@@ -49,7 +49,6 @@ Meteor.methods({
     check(taskId, String);
     check(isChecked, Boolean);
 
-    // Update the checked state for the task.
     return TasksCollection.updateAsync(taskId, {
       $set: { isChecked },
     });
