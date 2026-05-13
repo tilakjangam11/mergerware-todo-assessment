@@ -19,7 +19,7 @@ Meteor.methods({
     check(text, String);
     check(category, String);
 
-    // Create a clean task with the next available order number.
+    // Trim the input so blank tasks are rejected.
     const cleanText = text.trim();
 
     if (!cleanText) {
@@ -28,6 +28,7 @@ Meteor.methods({
 
     ensureValidCategory(category);
 
+    // Find the last order value so new tasks go to the bottom.
     const lastTask = await TasksCollection.findOneAsync({}, { sort: { order: -1 } });
 
     return TasksCollection.insertAsync({
@@ -41,7 +42,6 @@ Meteor.methods({
 
   'tasks.remove'(taskId) {
     check(taskId, String);
-    // Delete a task by id.
     return TasksCollection.removeAsync(taskId);
   },
 
@@ -49,7 +49,7 @@ Meteor.methods({
     check(taskId, String);
     check(isChecked, Boolean);
 
-    // Toggle the checked state for the task.
+    // Update the checked state for the task.
     return TasksCollection.updateAsync(taskId, {
       $set: { isChecked },
     });
