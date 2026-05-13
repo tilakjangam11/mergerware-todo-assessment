@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 
-import '../imports/api/tasksMethods';
-import '../imports/api/tasksPublications';
-import { TasksCollection } from '../imports/api/TasksCollection';
+import '/imports/api/tasksMethods';
+import '/imports/api/tasksPublications';
+import { TasksCollection } from '/imports/api/TasksCollection';
 
 const starterTasks = [
   { text: 'Finish the Meteor assessment', category: 'Work' },

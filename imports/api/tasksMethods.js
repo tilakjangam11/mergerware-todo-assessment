@@ -19,6 +19,7 @@ Meteor.methods({
     check(text, String);
     check(category, String);
 
+    // Create a clean task with the next available order number.
     const cleanText = text.trim();
 
     if (!cleanText) {
@@ -40,6 +41,7 @@ Meteor.methods({
 
   'tasks.remove'(taskId) {
     check(taskId, String);
+    // Delete a task by id.
     return TasksCollection.removeAsync(taskId);
   },
 
@@ -47,6 +49,7 @@ Meteor.methods({
     check(taskId, String);
     check(isChecked, Boolean);
 
+    // Toggle the checked state for the task.
     return TasksCollection.updateAsync(taskId, {
       $set: { isChecked },
     });

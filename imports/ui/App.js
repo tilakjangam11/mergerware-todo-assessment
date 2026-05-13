@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { TASKS_PUBLICATION_NAME, TasksCollection } from '../api/TasksCollection';
+import { TASKS_PUBLICATION_NAME, TasksCollection } from '/imports/api/TasksCollection';
 import './App.html';
 
 const HIDE_COMPLETED_KEY = 'hideCompleted';
@@ -33,6 +33,7 @@ const getVisibleTasks = (instance) => {
   });
 };
 
+// Reorder the visible list after a drag operation.
 const reorderVisibleTasks = (visibleTasks, draggedId, targetId) => {
   const draggedIndex = visibleTasks.findIndex((task) => task._id === draggedId);
   const targetIndex = visibleTasks.findIndex((task) => task._id === targetId);
